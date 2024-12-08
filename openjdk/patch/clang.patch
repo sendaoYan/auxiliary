@@ -1,0 +1,24 @@
+diff --git a/src/java.smartcardio/share/native/libj2pcsc/pcsc.c b/src/java.smartcardio/share/native/libj2pcsc/pcsc.c
+index 733c28a159a..26f91c6cf6b 100644
+--- a/src/java.smartcardio/share/native/libj2pcsc/pcsc.c
++++ b/src/java.smartcardio/share/native/libj2pcsc/pcsc.c
+@@ -45,6 +45,7 @@
+ #define dprintf2(s, p1, p2) printf(s, p1, p2)
+ #define dprintf3(s, p1, p2, p3) printf(s, p1, p2, p3)
+ #else
++#undef dprintf
+ #define dprintf(s)
+ #define dprintf1(s, p1)
+ #define dprintf2(s, p1, p2)
+diff --git a/src/jdk.crypto.cryptoki/share/native/libj2pkcs11/j2secmod.h b/src/jdk.crypto.cryptoki/share/native/libj2pkcs11/j2secmod.h
+index 4cdb7ba37ee..c35bf677f2d 100644
+--- a/src/jdk.crypto.cryptoki/share/native/libj2pkcs11/j2secmod.h
++++ b/src/jdk.crypto.cryptoki/share/native/libj2pkcs11/j2secmod.h
+@@ -42,6 +42,7 @@ void *p11FindFunction(JNIEnv *env, jlong jHandle, const char *functionName);
+ #define dprintf2(s, p1, p2) printf(s, p1, p2)
+ #define dprintf3(s, p1, p2, p3) printf(s, p1, p2, p3)
+ #else
++#undef dprintf
+ #define dprintf(s)
+ #define dprintf1(s, p1)
+ #define dprintf2(s, p1, p2)
