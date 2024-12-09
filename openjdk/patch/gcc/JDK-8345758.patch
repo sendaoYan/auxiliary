@@ -1,15 +1,15 @@
 diff --git a/src/hotspot/os_cpu/linux_aarch64/vm_version_linux_aarch64.cpp b/src/hotspot/os_cpu/linux_aarch64/vm_version_linux_aarch64.cpp
-index 53e5631fc2b..35e84c68fa7 100644
+index 53e5631fc2b..ac0d90aff51 100644
 --- a/src/hotspot/os_cpu/linux_aarch64/vm_version_linux_aarch64.cpp
 +++ b/src/hotspot/os_cpu/linux_aarch64/vm_version_linux_aarch64.cpp
 @@ -185,7 +185,10 @@ static bool read_fully(const char *fname, char *buf, size_t buflen) {
    assert(buflen >= 1, "invalid argument");
    int fd = os::open(fname, O_RDONLY, 0);
    if (fd != -1) {
-+PRAGMA_DIAG_PUSH
-+PRAGMA_NONNULL_IGNORED
++    PRAGMA_DIAG_PUSH
++    PRAGMA_NONNULL_IGNORED
      ssize_t read_sz = ::read(fd, buf, buflen);
-+PRAGMA_DIAG_POP
++    PRAGMA_DIAG_POP
      ::close(fd);
  
      // Skip if the contents is just "\n" because some machine only sets
