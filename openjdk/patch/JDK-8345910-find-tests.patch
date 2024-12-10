@@ -1,0 +1,15 @@
+diff --git a/src/jdk.hotspot.agent/linux/native/libsaproc/ps_core.c b/src/jdk.hotspot.agent/linux/native/libsaproc/ps_core.c
+index b1b69c81e2e..486a9eb027d 100644
+--- a/src/jdk.hotspot.agent/linux/native/libsaproc/ps_core.c
++++ b/src/jdk.hotspot.agent/linux/native/libsaproc/ps_core.c
+@@ -141,6 +141,10 @@ static bool core_read_data(struct ps_prochandle* ph, uintptr_t addr, char *buf,
+          resid -= len;
+          addr += len;
+          // we are not assuming 'buf' to be zero initialized.
++         if ((long)&buf < LONG_MAX) {
++          print_debug("address of buf %lu larger than LONG_MAX", (long)&buf);
++          return false;
++         }
+          memset(buf, 0, len);
+          buf += len;
+       }
