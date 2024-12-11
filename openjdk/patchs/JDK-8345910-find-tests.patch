@@ -11,14 +11,14 @@ index 61ac495968a..5bc83cf0978 100644
          unused-function, \
      DISABLED_WARNINGS_clang_java_md_macosx.m := unused-variable, \
 diff --git a/src/jdk.hotspot.agent/linux/native/libsaproc/ps_core.c b/src/jdk.hotspot.agent/linux/native/libsaproc/ps_core.c
-index b1b69c81e2e..fe2b8939397 100644
+index b1b69c81e2e..37d7f30e3c6 100644
 --- a/src/jdk.hotspot.agent/linux/native/libsaproc/ps_core.c
 +++ b/src/jdk.hotspot.agent/linux/native/libsaproc/ps_core.c
 @@ -141,6 +141,7 @@ static bool core_read_data(struct ps_prochandle* ph, uintptr_t addr, char *buf,
           resid -= len;
           addr += len;
           // we are not assuming 'buf' to be zero initialized.
-+         printf("memset in core_read_data function address:%lu length%lu:\n", (long)&buf, len);
++         printf("#memset in core_read_data function address:%lu length%lu:\n", (long)&buf, len);
           memset(buf, 0, len);
           buf += len;
        }
