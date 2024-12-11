@@ -1,15 +1,24 @@
+diff --git a/make/modules/java.base/lib/CoreLibraries.gmk b/make/modules/java.base/lib/CoreLibraries.gmk
+index 61ac495968a..5bc83cf0978 100644
+--- a/make/modules/java.base/lib/CoreLibraries.gmk
++++ b/make/modules/java.base/lib/CoreLibraries.gmk
+@@ -178,6 +178,7 @@ $(eval $(call SetupJdkLibrary, BUILD_LIBJLI, \
+     OPTIMIZATION := HIGH, \
+     CFLAGS := $(LIBJLI_CFLAGS) $(LIBZ_CFLAGS), \
+     DISABLED_WARNINGS_gcc := unused-function unused-variable, \
++    DISABLED_WARNINGS_gcc_java.c := format-truncation, \
+     DISABLED_WARNINGS_clang := deprecated-non-prototype format-nonliteral \
+         unused-function, \
+     DISABLED_WARNINGS_clang_java_md_macosx.m := unused-variable, \
 diff --git a/src/jdk.hotspot.agent/linux/native/libsaproc/ps_core.c b/src/jdk.hotspot.agent/linux/native/libsaproc/ps_core.c
-index b1b69c81e2e..486a9eb027d 100644
+index b1b69c81e2e..fe2b8939397 100644
 --- a/src/jdk.hotspot.agent/linux/native/libsaproc/ps_core.c
 +++ b/src/jdk.hotspot.agent/linux/native/libsaproc/ps_core.c
-@@ -141,6 +141,10 @@ static bool core_read_data(struct ps_prochandle* ph, uintptr_t addr, char *buf,
+@@ -141,6 +141,7 @@ static bool core_read_data(struct ps_prochandle* ph, uintptr_t addr, char *buf,
           resid -= len;
           addr += len;
           // we are not assuming 'buf' to be zero initialized.
-+         if ((long)&buf < LONG_MAX) {
-+          print_debug("address of buf %lu larger than LONG_MAX", (long)&buf);
-+          return false;
-+         }
++         printf("memset in core_read_data function address:%lu length%lu:\n", (long)&buf, len);
           memset(buf, 0, len);
           buf += len;
        }
