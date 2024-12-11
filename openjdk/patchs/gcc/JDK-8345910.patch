@@ -1,0 +1,25 @@
+diff --git a/make/modules/java.base/lib/CoreLibraries.gmk b/make/modules/java.base/lib/CoreLibraries.gmk
+index 61ac495968a..5bc83cf0978 100644
+--- a/make/modules/java.base/lib/CoreLibraries.gmk
++++ b/make/modules/java.base/lib/CoreLibraries.gmk
+@@ -178,6 +178,7 @@ $(eval $(call SetupJdkLibrary, BUILD_LIBJLI, \
+     OPTIMIZATION := HIGH, \
+     CFLAGS := $(LIBJLI_CFLAGS) $(LIBZ_CFLAGS), \
+     DISABLED_WARNINGS_gcc := unused-function unused-variable, \
++    DISABLED_WARNINGS_gcc_java.c := format-truncation, \
+     DISABLED_WARNINGS_clang := deprecated-non-prototype format-nonliteral \
+         unused-function, \
+     DISABLED_WARNINGS_clang_java_md_macosx.m := unused-variable, \
+diff --git a/make/modules/jdk.hotspot.agent/Lib.gmk b/make/modules/jdk.hotspot.agent/Lib.gmk
+index 12f1c1f2a90..19e252192be 100644
+--- a/make/modules/jdk.hotspot.agent/Lib.gmk
++++ b/make/modules/jdk.hotspot.agent/Lib.gmk
+@@ -59,7 +59,7 @@ $(eval $(call SetupJdkLibrary, BUILD_LIBSAPROC, \
+     OPTIMIZATION := HIGH, \
+     EXTRA_HEADER_DIRS := java.base:libjvm, \
+     DISABLED_WARNINGS_gcc := sign-compare, \
+-    DISABLED_WARNINGS_gcc_ps_core.c := pointer-arith, \
++    DISABLED_WARNINGS_gcc_ps_core.c := pointer-arith stringop-overflow array-bounds, \
+     DISABLED_WARNINGS_clang := sign-compare, \
+     DISABLED_WARNINGS_clang_libproc_impl.c := format-nonliteral, \
+     DISABLED_WARNINGS_clang_MacosxDebuggerLocal.m := unused-variable, \
