@@ -1,0 +1,20 @@
+diff --git a/src/jdk.hotspot.agent/linux/native/libsaproc/ps_core.c b/src/jdk.hotspot.agent/linux/native/libsaproc/ps_core.c
+index b1b69c81e2e..6d824de7735 100644
+--- a/src/jdk.hotspot.agent/linux/native/libsaproc/ps_core.c
++++ b/src/jdk.hotspot.agent/linux/native/libsaproc/ps_core.c
+@@ -30,6 +30,7 @@
+ #include <stddef.h>
+ #include <elf.h>
+ #include <link.h>
++#include <assert.h>
+ #include "libproc_impl.h"
+ #include "ps_core_common.h"
+ #include "proc_service.h"
+@@ -141,6 +142,7 @@ static bool core_read_data(struct ps_prochandle* ph, uintptr_t addr, char *buf,
+          resid -= len;
+          addr += len;
+          // we are not assuming 'buf' to be zero initialized.
++         assert(len > 0);
+          memset(buf, 0, len);
+          buf += len;
+       }
