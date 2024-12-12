@@ -1,0 +1,26 @@
+diff --git a/src/java.desktop/unix/native/libsplashscreen/splashscreen_sys.c b/src/java.desktop/unix/native/libsplashscreen/splashscreen_sys.c
+index e89d813fff4..9744eaa490b 100644
+--- a/src/java.desktop/unix/native/libsplashscreen/splashscreen_sys.c
++++ b/src/java.desktop/unix/native/libsplashscreen/splashscreen_sys.c
+@@ -372,7 +372,9 @@ void
+ sendctl(Splash * splash, char code) {
+ //    if (splash->isVisible>0) {
+     if (splash && splash->controlpipe[1]) {
+-        write(splash->controlpipe[1], &code, 1);
++        if (write(splash->controlpipe[1], &code, 1)) {
++            perror("sendctl write splash->controlpipe[1] fail");
++        }
+     }
+ }
+ 
+@@ -710,7 +712,9 @@ SplashScreenThread(void *param) {
+ //    pthread_setspecific(key, splash);
+ 
+     SplashLock(splash);
+-    pipe(splash->controlpipe);
++    if (pipe(splash->controlpipe) == -1) {
++        perror("SplashScreenThread create pipe splash->controlpipe fail");
++    }
+     fcntl(splash->controlpipe[0], F_SETFL,
+         fcntl(splash->controlpipe[0], F_GETFL, 0) | O_NONBLOCK);
+     splash->time = SplashTime();
