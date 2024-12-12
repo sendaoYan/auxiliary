@@ -1,0 +1,57 @@
+diff --git a/test/jdk/sun/net/www/protocol/http/RetryUponTimeout.java b/test/jdk/sun/net/www/protocol/http/RetryUponTimeout.java
+index b2214780c2e..b718a6cef4a 100644
+--- a/test/jdk/sun/net/www/protocol/http/RetryUponTimeout.java
++++ b/test/jdk/sun/net/www/protocol/http/RetryUponTimeout.java
+@@ -26,21 +26,36 @@
+  * @bug 4772077
+  * @library /test/lib
+  * @summary  using defaultReadTimeout appear to retry request upon timeout
++ * @run main/othervm RetryUponTimeout
+  */
+ 
+ import java.net.*;
+ import java.io.*;
++import java.util.logging.ConsoleHandler;
++import java.util.logging.Handler;
++import java.util.logging.Level;
++import java.util.logging.Logger;
+ 
+ import jdk.test.lib.net.HttpHeaderParser;
+ import jdk.test.lib.net.URIBuilder;
+ 
+ public class RetryUponTimeout implements Runnable {
++
++    private static void enableLog() {
++        final String logger = "sun.net.www.protocol.http.HttpURLConnection";
++        Logger.getLogger(logger).setLevel(Level.ALL);
++        Handler h = new ConsoleHandler();
++        h.setLevel(Level.ALL);
++        Logger.getLogger(logger).addHandler(h);
++    }
++
+     // run server
+     public void run(){
+         Socket socket = null;
+         try {
+             for (int i = 0; i < 2; i++) {
+                 socket = server.accept();
++                System.out.println("accepted connection from " + socket);
+                 InputStream is = socket.getInputStream ();
+                 HttpHeaderParser header = new HttpHeaderParser (is);
+                 count++;
+@@ -60,6 +75,7 @@ public void run(){
+     static ServerSocket server;
+     static int count = 0;
+     public static void main(String[] args) throws Exception {
++        enableLog();
+         try {
+             server = new ServerSocket(0, 0, InetAddress.getLoopbackAddress());
+             int port = server.getLocalPort ();
+@@ -69,6 +85,7 @@ public static void main(String[] args) throws Exception {
+                 .scheme("http")
+                 .loopback()
+                 .port(port)
++                .path("/" + System.nanoTime())
+                 .toURL();
+             System.out.println("URL: " + url);
+             java.net.URLConnection uc = url.openConnection();
