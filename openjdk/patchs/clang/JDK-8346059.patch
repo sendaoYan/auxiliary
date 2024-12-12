@@ -1,0 +1,15 @@
+diff --git a/src/java.desktop/unix/native/libawt/awt/awt_LoadLibrary.c b/src/java.desktop/unix/native/libawt/awt/awt_LoadLibrary.c
+index f24a4eb9a2c..d6ff51f8018 100644
+--- a/src/java.desktop/unix/native/libawt/awt/awt_LoadLibrary.c
++++ b/src/java.desktop/unix/native/libawt/awt/awt_LoadLibrary.c
+@@ -137,7 +137,9 @@ AWT_OnLoad(JavaVM *vm, void *reserved)
+     } else {
+         /* Get address of this library and the directory containing it. */
+         dladdr((void *)AWT_OnLoad, &dlinfo);
+-        realpath((char *)dlinfo.dli_fname, buf);
++        if (realpath((char *)dlinfo.dli_fname, buf) == NULL) {
++            perror((char *)dlinfo.dli_fname);
++        }
+         len = strlen(buf);
+         p = strrchr(buf, '/');
+ 
