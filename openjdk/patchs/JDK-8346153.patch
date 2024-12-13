@@ -1,0 +1,20 @@
+diff --git a/test/jdk/javax/net/ssl/TLSCommon/SSLEngineTestCase.java b/test/jdk/javax/net/ssl/TLSCommon/SSLEngineTestCase.java
+index dce28edadf2..18902950bd5 100644
+--- a/test/jdk/javax/net/ssl/TLSCommon/SSLEngineTestCase.java
++++ b/test/jdk/javax/net/ssl/TLSCommon/SSLEngineTestCase.java
+@@ -1,5 +1,5 @@
+ /*
+- * Copyright (c) 2015, 2023, Oracle and/or its affiliates. All rights reserved.
++ * Copyright (c) 2015, 2024, Oracle and/or its affiliates. All rights reserved.
+  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+  *
+  * This code is free software; you can redistribute it and/or modify it
+@@ -162,7 +162,7 @@ public enum HandshakeMode {
+     private static boolean doUnwrapForNotHandshakingStatus;
+     private static boolean endHandshakeLoop = false;
+ 
+-    private static final int MAX_HANDSHAKE_LOOPS = 100;
++    private static final int MAX_HANDSHAKE_LOOPS = 1000;
+     private static final String EXCHANGE_MSG_SENT = "Hello, peer!";
+     private static final String TEST_SRC = System.getProperty("test.src", ".");
+     private static final String KTAB_FILENAME = "krb5.keytab.data";
