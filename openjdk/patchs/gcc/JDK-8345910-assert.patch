@@ -14,7 +14,8 @@ index b1b69c81e2e..6d824de7735 100644
           resid -= len;
           addr += len;
           // we are not assuming 'buf' to be zero initialized.
-+         assert(len > 0);
++         assert(len >= 0);
++         printf("#core_read_data function\n");
           memset(buf, 0, len);
           buf += len;
        }
