@@ -1,0 +1,41 @@
+diff --git a/src/hotspot/share/libadt/dict.cpp b/src/hotspot/share/libadt/dict.cpp
+index 0343125018e..8a8e7b4ab78 100644
+--- a/src/hotspot/share/libadt/dict.cpp
++++ b/src/hotspot/share/libadt/dict.cpp
+@@ -145,7 +145,7 @@ void Dict::doubhash() {
+ // an old value is found, it's swapped with the prior key-value pair on the
+ // list.  This moves a commonly searched-for value towards the list head.
+ void*Dict::Insert(void* key, void* val, bool replace) {
+-  uint hash = _hash(key);       // Get hash key
++  uint hash = (uint)_hash(key);       // Get hash key
+   uint i = hash & (_size - 1);  // Get hash key, corrected for size
+   bucket* b = &_bin[i];
+   for (uint j = 0; j < b->_cnt; j++) {
+diff --git a/src/hotspot/share/opto/type.cpp b/src/hotspot/share/opto/type.cpp
+index 407a4a20a9b..4d0cfd99942 100644
+--- a/src/hotspot/share/opto/type.cpp
++++ b/src/hotspot/share/opto/type.cpp
+@@ -416,8 +416,8 @@ const Type* Type::maybe_remove_speculative(bool include_speculative) const {
+ }
+ 
+ //------------------------------hash-------------------------------------------
+-int Type::uhash( const Type *const t ) {
+-  return (int)t->hash();
++int Type::uhash( const void *const t ) {
++  return ((const Type *const)t)->hash();
+ }
+ 
+ #define SMALLINT ((juint)3)  // a value too insignificant to consider widening
+diff --git a/src/hotspot/share/opto/type.hpp b/src/hotspot/share/opto/type.hpp
+index 2dd702b686b..18c87cd3972 100644
+--- a/src/hotspot/share/opto/type.hpp
++++ b/src/hotspot/share/opto/type.hpp
+@@ -156,7 +156,7 @@ class Type {
+   static Dict* _shared_type_dict;
+   static const TypeInfo _type_info[];
+ 
+-  static int uhash( const Type *const t );
++  static int uhash( const void *const t );
+   // Structural equality check.  Assumes that equals() has already compared
+   // the _base types and thus knows it can cast 't' appropriately.
+   virtual bool eq( const Type *t ) const;
