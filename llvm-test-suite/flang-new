@@ -1,0 +1,4 @@
+#!/bin/bash
+scriptDir=$(readlink -f ${BASH_SOURCE[0]})
+scriptDir=$(dirname $scriptDir)
+${scriptDir}/flang -fuse-ld=lld ${@}
