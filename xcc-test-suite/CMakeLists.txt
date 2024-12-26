@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.13.4)
-project(Alibaba-Cloud-Compiler-test-suite LANGUAGES C CXX)
+project(Cloud-Compiler-test-suite LANGUAGES C CXX)
 add_subdirectory(fuzz)
 
 set(OPTFLAGS "${OPTFLAGS}")

@@ -4,7 +4,7 @@
 About the test suite
 
 ## Homepage
-[homepage](https://code.alibaba-inc.com/clang-llvm/llvm-test-suite)
+[homepage](https://github.com/llvm/llvm-test-suite)
 
 ## Version
 
