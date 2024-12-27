@@ -1,0 +1,192 @@
+commit 0aaec97527ddf2b229a9dd6beaa7ff55c635dee5
+Author: Leo Korinth <lkorinth@openjdk.org>
+Date:   Fri Feb 16 09:23:42 2024 +0000
+
+    8325763: Revert properties: vm.opt.x.*
+    
+    Reviewed-by: ayang, stefank
+
+diff --git a/test/hotspot/jtreg/gc/arguments/TestG1HeapSizeFlags.java b/test/hotspot/jtreg/gc/arguments/TestG1HeapSizeFlags.java
+index 24d9b7df40c..24e542881c0 100644
+--- a/test/hotspot/jtreg/gc/arguments/TestG1HeapSizeFlags.java
++++ b/test/hotspot/jtreg/gc/arguments/TestG1HeapSizeFlags.java
+@@ -1,5 +1,5 @@
+ /*
+- * Copyright (c) 2013, 2023, Oracle and/or its affiliates. All rights reserved.
++ * Copyright (c) 2013, 2024, Oracle and/or its affiliates. All rights reserved.
+  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+  *
+  * This code is free software; you can redistribute it and/or modify it
+@@ -28,7 +28,7 @@
+  * @bug 8006088
+  * @summary Tests argument processing for initial and maximum heap size for the G1 collector
+  * @key flag-sensitive
+- * @requires vm.gc.G1 & vm.opt.x.Xmx == null & vm.opt.x.Xms == null & vm.opt.MinHeapSize == null & vm.opt.MaxHeapSize == null & vm.opt.InitialHeapSize == null
++ * @requires vm.gc.G1 & vm.opt.MinHeapSize == null & vm.opt.MaxHeapSize == null & vm.opt.InitialHeapSize == null
+  * @library /test/lib
+  * @library /
+  * @modules java.base/jdk.internal.misc
+diff --git a/test/hotspot/jtreg/gc/arguments/TestHeapFreeRatio.java b/test/hotspot/jtreg/gc/arguments/TestHeapFreeRatio.java
+index c8eaa0f46e3..066d3c03603 100644
+--- a/test/hotspot/jtreg/gc/arguments/TestHeapFreeRatio.java
++++ b/test/hotspot/jtreg/gc/arguments/TestHeapFreeRatio.java
+@@ -1,5 +1,5 @@
+ /*
+- * Copyright (c) 2013, 2023, Oracle and/or its affiliates. All rights reserved.
++ * Copyright (c) 2013, 2024, Oracle and/or its affiliates. All rights reserved.
+  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+  *
+  * This code is free software; you can redistribute it and/or modify it
+@@ -27,7 +27,7 @@
+  * @test TestHeapFreeRatio
+  * @bug 8025661
+  * @summary Test parsing of -Xminf and -Xmaxf
+- * @requires vm.opt.x.Xminf == null & vm.opt.x.Xmaxf == null & vm.opt.MinHeapFreeRatio == null & vm.opt.MaxHeapFreeRatio == null
++ * @requires vm.opt.MinHeapFreeRatio == null & vm.opt.MaxHeapFreeRatio == null
+  * @library /test/lib
+  * @library /
+  * @modules java.base/jdk.internal.misc
+diff --git a/test/hotspot/jtreg/gc/arguments/TestMaxNewSize.java b/test/hotspot/jtreg/gc/arguments/TestMaxNewSize.java
+index ff6c3127640..3f741ab1440 100644
+--- a/test/hotspot/jtreg/gc/arguments/TestMaxNewSize.java
++++ b/test/hotspot/jtreg/gc/arguments/TestMaxNewSize.java
+@@ -1,5 +1,5 @@
+ /*
+- * Copyright (c) 2013, 2023, Oracle and/or its affiliates. All rights reserved.
++ * Copyright (c) 2013, 2024, Oracle and/or its affiliates. All rights reserved.
+  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+  *
+  * This code is free software; you can redistribute it and/or modify it
+@@ -29,7 +29,7 @@
+  * @summary Make sure that MaxNewSize always has a useful value after argument
+  * processing.
+  * @key flag-sensitive
+- * @requires vm.gc.Serial & vm.opt.MaxNewSize == null & vm.opt.NewRatio == null & vm.opt.NewSize == null & vm.opt.OldSize == null & vm.opt.x.Xms == null & vm.opt.x.Xmx == null
++ * @requires vm.gc.Serial & vm.opt.MaxNewSize == null & vm.opt.NewRatio == null & vm.opt.NewSize == null & vm.opt.OldSize == null
+  * @library /test/lib
+  * @library /
+  * @modules java.base/jdk.internal.misc
+@@ -44,7 +44,7 @@
+  * @summary Make sure that MaxNewSize always has a useful value after argument
+  * processing.
+  * @key flag-sensitive
+- * @requires vm.gc.Parallel & vm.opt.MaxNewSize == null & vm.opt.NewRatio == null & vm.opt.NewSize == null & vm.opt.OldSize == null & vm.opt.x.Xms == null & vm.opt.x.Xmx == null
++ * @requires vm.gc.Parallel & vm.opt.MaxNewSize == null & vm.opt.NewRatio == null & vm.opt.NewSize == null & vm.opt.OldSize == null
+  * @library /test/lib
+  * @library /
+  * @modules java.base/jdk.internal.misc
+@@ -59,7 +59,7 @@
+  * @summary Make sure that MaxNewSize always has a useful value after argument
+  * processing.
+  * @key flag-sensitive
+- * @requires vm.gc.G1 & vm.opt.MaxNewSize == null & vm.opt.NewRatio == null & vm.opt.NewSize == null & vm.opt.OldSize == null & vm.opt.x.Xms == null & vm.opt.x.Xmx == null
++ * @requires vm.gc.G1 & vm.opt.MaxNewSize == null & vm.opt.NewRatio == null & vm.opt.NewSize == null & vm.opt.OldSize == null
+  * @library /test/lib
+  * @library /
+  * @modules java.base/jdk.internal.misc
+diff --git a/test/hotspot/jtreg/gc/arguments/TestParallelHeapSizeFlags.java b/test/hotspot/jtreg/gc/arguments/TestParallelHeapSizeFlags.java
+index 9cdb3d024cb..544064953df 100644
+--- a/test/hotspot/jtreg/gc/arguments/TestParallelHeapSizeFlags.java
++++ b/test/hotspot/jtreg/gc/arguments/TestParallelHeapSizeFlags.java
+@@ -1,5 +1,5 @@
+ /*
+- * Copyright (c) 2013, 2023, Oracle and/or its affiliates. All rights reserved.
++ * Copyright (c) 2013, 2024, Oracle and/or its affiliates. All rights reserved.
+  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+  *
+  * This code is free software; you can redistribute it and/or modify it
+@@ -29,7 +29,7 @@
+  * @summary Tests argument processing for initial and maximum heap size for the
+  * parallel collectors.
+  * @key flag-sensitive
+- * @requires vm.gc.Parallel & vm.opt.x.Xmx == null & vm.opt.x.Xms == null & vm.opt.MinHeapSize == null & vm.opt.MaxHeapSize == null & vm.opt.InitialHeapSize == null
++ * @requires vm.gc.Parallel & vm.opt.MinHeapSize == null & vm.opt.MaxHeapSize == null & vm.opt.InitialHeapSize == null
+  * @library /test/lib
+  * @library /
+  * @modules java.base/jdk.internal.misc
+diff --git a/test/hotspot/jtreg/gc/arguments/TestSerialHeapSizeFlags.java b/test/hotspot/jtreg/gc/arguments/TestSerialHeapSizeFlags.java
+index 3342446aecc..c580245a2a3 100644
+--- a/test/hotspot/jtreg/gc/arguments/TestSerialHeapSizeFlags.java
++++ b/test/hotspot/jtreg/gc/arguments/TestSerialHeapSizeFlags.java
+@@ -1,5 +1,5 @@
+ /*
+- * Copyright (c) 2013, 2023, Oracle and/or its affiliates. All rights reserved.
++ * Copyright (c) 2013, 2024, Oracle and/or its affiliates. All rights reserved.
+  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+  *
+  * This code is free software; you can redistribute it and/or modify it
+@@ -28,7 +28,7 @@
+  * @bug 8006088
+  * @summary Tests argument processing for initial and maximum heap size for the Serial collector
+  * @key flag-sensitive
+- * @requires vm.gc.Serial & vm.opt.x.Xmx == null & vm.opt.x.Xms == null & vm.opt.MinHeapSize == null & vm.opt.MaxHeapSize == null & vm.opt.InitialHeapSize == null
++ * @requires vm.gc.Serial & vm.opt.MinHeapSize == null & vm.opt.MaxHeapSize == null & vm.opt.InitialHeapSize == null
+  * @library /test/lib
+  * @library /
+  * @modules java.base/jdk.internal.misc
+diff --git a/test/jtreg-ext/requires/VMProps.java b/test/jtreg-ext/requires/VMProps.java
+index 7c5bfd6ab75..986e0ec14bb 100644
+--- a/test/jtreg-ext/requires/VMProps.java
++++ b/test/jtreg-ext/requires/VMProps.java
+@@ -1,5 +1,5 @@
+ /*
+- * Copyright (c) 2016, 2023, Oracle and/or its affiliates. All rights reserved.
++ * Copyright (c) 2016, 2024, Oracle and/or its affiliates. All rights reserved.
+  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+  *
+  * This code is free software; you can redistribute it and/or modify it
+@@ -47,7 +47,6 @@
+ import java.util.function.Supplier;
+ import java.util.regex.Matcher;
+ import java.util.regex.Pattern;
+-import java.util.stream.Collectors;
+ import java.util.stream.Stream;
+ 
+ import jdk.internal.foreign.CABI;
+@@ -84,10 +83,6 @@ public void put(String key, Supplier<String> s) {
+             }
+             map.put(key, value);
+         }
+-
+-        public void putAll(Map<String, String> map) {
+-            map.entrySet().forEach(e -> put(e.getKey(), () -> e.getValue()));
+-        }
+     }
+ 
+     /**
+@@ -140,7 +135,6 @@ public Map<String, String> call() {
+         map.put("jdk.containerized", this::jdkContainerized);
+         map.put("vm.flagless", this::isFlagless);
+         map.put("jdk.foreign.linker", this::jdkForeignLinker);
+-        map.putAll(xOptFlags()); // -Xmx4g -> @requires vm.opt.x.Xmx == "4g" )
+         vmGC(map); // vm.gc.X = true/false
+         vmGCforCDS(map); // may set vm.gc
+         vmOptFinalFlags(map);
+@@ -719,27 +713,6 @@ private Stream<String> allFlags() {
+         return Stream.of((System.getProperty("test.vm.opts", "") + " " + System.getProperty("test.java.opts", "")).trim().split("\\s+"));
+     }
+ 
+-    /**
+-     * Parses extra options, options that start with -X excluding the
+-     * bare -X option (as it is not considered an extra option).
+-     * Ignores extra options not starting with -X
+-     *
+-     * This could be improved to handle extra options not starting
+-     * with -X as well as "standard" options.
+-     */
+-    private Map<String, String> xOptFlags() {
+-        return allFlags()
+-            .filter(s -> s.startsWith("-X") && !s.startsWith("-XX:") && !s.equals("-X"))
+-            .map(s -> s.replaceFirst("-", ""))
+-            .map(flag -> flag.splitWithDelimiters("[:0123456789]", 2))
+-            .collect(Collectors.toMap(a -> "vm.opt.x." + a[0],
+-                                      a -> (a.length == 1)
+-                                      ? "true" // -Xnoclassgc
+-                                      : (a[1].equals(":")
+-                                         ? a[2]            // ["-XshowSettings", ":", "system"]
+-                                         : a[1] + a[2]))); // ["-Xmx", "4", "g"]
+-    }
+-
+     /*
+      * A string indicating the foreign linker that is currently being used. See jdk.internal.foreign.CABI
+      * for valid values.
