@@ -1,0 +1,28 @@
+diff --git a/src/hotspot/share/memory/memoryReserver.cpp b/src/hotspot/share/memory/memoryReserver.cpp
+index d68736c7f2a..f83ae311991 100644
+--- a/src/hotspot/share/memory/memoryReserver.cpp
++++ b/src/hotspot/share/memory/memoryReserver.cpp
+@@ -34,6 +34,7 @@
+ #include "utilities/formatBuffer.hpp"
+ #include "utilities/globalDefinitions.hpp"
+ #include "utilities/powerOfTwo.hpp"
++#include "sanitizers/ub.hpp"
+ 
+ static void sanity_check_size_and_alignment(size_t size, size_t alignment) {
+   assert(size > 0, "Precondition");
+@@ -395,6 +396,7 @@ void HeapReserver::Instance::release(const ReservedSpace& reserved) {
+ // Does not check whether the reserved memory actually is at requested_address, as the memory returned
+ // might still fulfill the wishes of the caller.
+ // Assures the memory is aligned to 'alignment'.
++ATTRIBUTE_NO_UBSAN
+ ReservedSpace HeapReserver::Instance::try_reserve_memory(size_t size,
+                                                          size_t alignment,
+                                                          size_t page_size,
+@@ -418,6 +420,7 @@ ReservedSpace HeapReserver::Instance::try_reserve_memory(size_t size,
+   return {};
+ }
+ 
++ATTRIBUTE_NO_UBSAN
+ ReservedSpace HeapReserver::Instance::try_reserve_range(char *highest_start,
+                                                         char *lowest_start,
+                                                         size_t attach_point_alignment,
