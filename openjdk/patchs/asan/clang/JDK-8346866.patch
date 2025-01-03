@@ -7,7 +7,7 @@ index d68736c7f2a..069264de2d3 100644
    // Try attach points from top to bottom.
    for (char* attach_point = highest_start;
 -       attach_point >= lowest_start && attach_point <= highest_start;  // Avoid wrap around.
-+       attach_point >= lowest_start;  // Avoid wrap around.
++       attach_point >= lowest_start;
         attach_point -= stepsize) {
      ReservedSpace reserved = try_reserve_memory(size, alignment, page_size, attach_point);
  
@@ -20,44 +20,3 @@ index d68736c7f2a..069264de2d3 100644
    }
  
    // Failed
-diff --git a/src/java.desktop/unix/native/libawt_xawt/xawt/XToolkit.c b/src/java.desktop/unix/native/libawt_xawt/xawt/XToolkit.c
-index abe3a1c54ce..a7027523557 100644
---- a/src/java.desktop/unix/native/libawt_xawt/xawt/XToolkit.c
-+++ b/src/java.desktop/unix/native/libawt_xawt/xawt/XToolkit.c
-@@ -692,7 +692,9 @@ void awt_output_flush() {
- static void wakeUp() {
-     static char wakeUp_char = 'p';
-     if (!isMainThread() && awt_pipe_inited) {
--        write ( AWT_WRITEPIPE, &wakeUp_char, 1 );
-+        if (write(AWT_WRITEPIPE, &wakeUp_char, 1) == -1 ) {
-+            perror("wakeUp write AWT_WRITEPIPE fail");
-+        }
-     }
- }
- 
-diff --git a/src/java.desktop/unix/native/libsplashscreen/splashscreen_sys.c b/src/java.desktop/unix/native/libsplashscreen/splashscreen_sys.c
-index e89d813fff4..9744eaa490b 100644
---- a/src/java.desktop/unix/native/libsplashscreen/splashscreen_sys.c
-+++ b/src/java.desktop/unix/native/libsplashscreen/splashscreen_sys.c
-@@ -372,7 +372,9 @@ void
- sendctl(Splash * splash, char code) {
- //    if (splash->isVisible>0) {
-     if (splash && splash->controlpipe[1]) {
--        write(splash->controlpipe[1], &code, 1);
-+        if (write(splash->controlpipe[1], &code, 1)) {
-+            perror("sendctl write splash->controlpipe[1] fail");
-+        }
-     }
- }
- 
-@@ -710,7 +712,9 @@ SplashScreenThread(void *param) {
- //    pthread_setspecific(key, splash);
- 
-     SplashLock(splash);
--    pipe(splash->controlpipe);
-+    if (pipe(splash->controlpipe) == -1) {
-+        perror("SplashScreenThread create pipe splash->controlpipe fail");
-+    }
-     fcntl(splash->controlpipe[0], F_SETFL,
-         fcntl(splash->controlpipe[0], F_GETFL, 0) | O_NONBLOCK);
-     splash->time = SplashTime();
