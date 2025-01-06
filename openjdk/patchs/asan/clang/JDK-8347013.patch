@@ -1,0 +1,35 @@
+diff --git a/src/hotspot/share/logging/logSelection.cpp b/src/hotspot/share/logging/logSelection.cpp
+index 99ecc9f87f2..ed29382bc3c 100644
+--- a/src/hotspot/share/logging/logSelection.cpp
++++ b/src/hotspot/share/logging/logSelection.cpp
+@@ -151,7 +151,7 @@ static LogSelection parse_internal(char *str, outputStream* errstream) {
+       return LogSelection::Invalid;
+     }
+     tags[ntags++] = tag;
+-    cur_tag = plus_pos + 1;
++    cur_tag = (char *)(p2u(plus_pos) + 1);
+   } while (plus_pos != nullptr);
+ 
+   for (size_t i = 0; i < ntags; i++) {
+diff --git a/src/hotspot/share/logging/logSelectionList.cpp b/src/hotspot/share/logging/logSelectionList.cpp
+index ac63f20512c..40bf460aff9 100644
+--- a/src/hotspot/share/logging/logSelectionList.cpp
++++ b/src/hotspot/share/logging/logSelectionList.cpp
+@@ -69,7 +69,7 @@ bool LogSelectionList::parse(const char* str, outputStream* errstream) {
+   }
+   char* copy = os::strdup_check_oom(str, mtLogging);
+   // Split string on commas
+-  for (char *comma_pos = copy, *cur = copy; success && comma_pos != nullptr; cur = comma_pos + 1) {
++  for (char *comma_pos = copy, *cur = copy;; cur = comma_pos + 1) {
+     if (_nselections == MaxSelections) {
+       if (errstream != nullptr) {
+         errstream->print_cr("Can not have more than " SIZE_FORMAT " log selections in a single configuration.",
+@@ -82,6 +82,8 @@ bool LogSelectionList::parse(const char* str, outputStream* errstream) {
+     comma_pos = strchr(cur, ',');
+     if (comma_pos != nullptr) {
+       *comma_pos = '\0';
++    } else {
++      break;
+     }
+ 
+     LogSelection selection = LogSelection::parse(cur, errstream);
