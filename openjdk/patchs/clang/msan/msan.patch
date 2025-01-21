@@ -1,0 +1,13 @@
+diff --git a/make/autoconf/flags-ldflags.m4 b/make/autoconf/flags-ldflags.m4
+index 2e060a71d4d..0706b41976c 100644
+--- a/make/autoconf/flags-ldflags.m4
++++ b/make/autoconf/flags-ldflags.m4
+@@ -72,7 +72,7 @@ AC_DEFUN([FLAGS_SETUP_LDFLAGS_HELPER],
+ 
+     if test "x$OPENJDK_TARGET_OS" = xlinux; then
+       # Clang needs the lld linker to work correctly
+-      BASIC_LDFLAGS="-fuse-ld=lld -Wl,--exclude-libs,ALL"
++      BASIC_LDFLAGS="-fuse-ld=lld"
+       if test "x$CXX_IS_USER_SUPPLIED" = xfalse && test "x$CC_IS_USER_SUPPLIED" = xfalse; then
+         UTIL_REQUIRE_PROGS(LLD, lld, $TOOLCHAIN_PATH:$PATH)
+       fi
