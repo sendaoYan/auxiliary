@@ -1,0 +1,94 @@
+diff --git a/test/hotspot/jtreg/runtime/os/TestTrimNative.java b/test/hotspot/jtreg/runtime/os/TestTrimNative.java
+index e8645a91479..932f1d6ab7c 100644
+--- a/test/hotspot/jtreg/runtime/os/TestTrimNative.java
++++ b/test/hotspot/jtreg/runtime/os/TestTrimNative.java
+@@ -126,6 +126,8 @@
+ import java.util.*;
+ import java.util.regex.Matcher;
+ import java.util.regex.Pattern;
++import java.lang.management.ManagementFactory;
++import java.lang.management.ThreadMXBean;
+ 
+ import jdk.test.whitebox.WhiteBox;
+ 
+@@ -183,6 +185,37 @@ private static void checkExpectedLogMessages(OutputAnalyzer output, boolean expe
+         }
+     }
+ 
++    /**
++     * Given JVM output, look for one or more log lines that describes a successful negative trim. The total amount
++     * of trims should be matching about what the test program allocated.
++     * @param output
++     * @param strict: if true, expect RSS to go down; if false, just look for trims without looking at RSS.
++     */
++    private static void parseOutputAndLookForNegativeTrim(OutputAnalyzer output, boolean strictTesting, long trimInterval, long sleepTime) {
++        output.reportDiagnosticSummary();
++        List<String> lines = output.asLines();
++        Pattern pattern = Pattern.compile("CPU time used: (\\d+) ms.");
++        long runtime_ms = 0;
++        for (String line : lines) {
++            Matcher matcher = pattern.matcher(line);
++            if (matcher.matches()) {
++                runtime_ms = Long.parseLong(matcher.group(1));
++                System.out.println("runtime_ms = " + runtime_ms);
++                break;
++            }
++        }
++        if (runtime_ms == 0) {
++            throw new RuntimeException("runtime_ms = " + 0);
++        }
++
++        runtime_ms += sleepTime;
++        long maxTrimsExpected = runtime_ms / trimInterval;
++        long minTrimsExpected = maxTrimsExpected / 2;
++        System.out.println("maxTrimsExpected = " + maxTrimsExpected);
++        System.out.println("minTrimsExpected = " + minTrimsExpected);
++        parseOutputAndLookForNegativeTrim(output, (int) minTrimsExpected, (int) maxTrimsExpected, strictTesting);
++    }
++
+     /**
+      * Given JVM output, look for one or more log lines that describes a successful negative trim. The total amount
+      * of trims should be matching about what the test program allocated.
+@@ -241,6 +274,9 @@ private static void parseOutputAndLookForNegativeTrim(OutputAnalyzer output, int
+ 
+     static class Tester {
+         public static void main(String[] args) throws Exception {
++            ThreadMXBean threadMXBean = ManagementFactory.getThreadMXBean();
++            long threadId = Thread.currentThread().threadId();
++            long startTime = threadMXBean.getThreadCpuTime(threadId);
+             long sleeptime = Long.parseLong(args[0]);
+ 
+             System.out.println("Will spike now...");
+@@ -261,6 +297,10 @@ public static void main(String[] args) throws Exception {
+             System.out.println("Sleeping for " + sleeptime + " ms...");
+             Thread.sleep(sleeptime);
+             System.out.println("Done.");
++
++            long endTime = threadMXBean.getThreadCpuTime(threadId);
++            long cpuTimeUsed = (endTime - startTime)/1_000_000;
++            System.out.println("CPU time used: " + cpuTimeUsed + " ms.");
+         }
+     }
+ 
+@@ -276,19 +316,15 @@ public static void main(String[] args) throws Exception {
+             case "trimNative":
+             case "trimNativeStrict": {
+                 long trimInterval = 500; // twice per second
+-                long ms1 = System.currentTimeMillis();
+                 OutputAnalyzer output = runTestWithOptions(
+                         new String[] { "-XX:TrimNativeHeapInterval=" + trimInterval },
+                         new String[] { TestTrimNative.Tester.class.getName(), "5000" }
+                 );
+-                long ms2 = System.currentTimeMillis();
+-                long runtime_ms = ms2 - ms1;
+ 
+                 checkExpectedLogMessages(output, true, 500);
+ 
+-                long maxTrimsExpected = runtime_ms / trimInterval;
+-                long minTrimsExpected = maxTrimsExpected / 2;
+-                parseOutputAndLookForNegativeTrim(output, (int) minTrimsExpected, (int) maxTrimsExpected, strictTesting);
++                long sleepTime = 5000;
++                parseOutputAndLookForNegativeTrim(output, strictTesting, trimInterval, sleepTime);
+             } break;
+ 
+             case "trimNativeHighInterval": {
