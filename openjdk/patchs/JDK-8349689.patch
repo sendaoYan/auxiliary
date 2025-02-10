@@ -1,0 +1,444 @@
+diff --git a/test/jdk/java/lang/Thread/virtual/JfrEvents.java b/test/jdk/java/lang/Thread/virtual/JfrEvents.java
+index a1671fe3cc5..badecba7a54 100644
+--- a/test/jdk/java/lang/Thread/virtual/JfrEvents.java
++++ b/test/jdk/java/lang/Thread/virtual/JfrEvents.java
+@@ -1,5 +1,5 @@
+ /*
+- * Copyright (c) 2021, 2024, Oracle and/or its affiliates. All rights reserved.
++ * Copyright (c) 2021, 2025, Oracle and/or its affiliates. All rights reserved.
+  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+  *
+  * This code is free software; you can redistribute it and/or modify it
+@@ -27,7 +27,7 @@
+  * @requires vm.continuations
+  * @modules jdk.jfr java.base/java.lang:+open jdk.management
+  * @library /test/lib
+- * @run junit/othervm --enable-native-access=ALL-UNNAMED JfrEvents
++ * @run junit/othervm/native --enable-native-access=ALL-UNNAMED JfrEvents
+  */
+ 
+ import java.io.IOException;
+diff --git a/test/jdk/java/lang/Thread/virtual/MonitorEnterExit.java b/test/jdk/java/lang/Thread/virtual/MonitorEnterExit.java
+index f095fb2cf98..858f7625386 100644
+--- a/test/jdk/java/lang/Thread/virtual/MonitorEnterExit.java
++++ b/test/jdk/java/lang/Thread/virtual/MonitorEnterExit.java
+@@ -1,5 +1,5 @@
+ /*
+- * Copyright (c) 2023, 2024, Oracle and/or its affiliates. All rights reserved.
++ * Copyright (c) 2023, 2025, Oracle and/or its affiliates. All rights reserved.
+  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+  *
+  * This code is free software; you can redistribute it and/or modify it
+@@ -27,7 +27,7 @@
+  * @modules java.base/java.lang:+open jdk.management
+  * @library /test/lib
+  * @build LockingMode
+- * @run junit/othervm --enable-native-access=ALL-UNNAMED MonitorEnterExit
++ * @run junit/othervm/native --enable-native-access=ALL-UNNAMED MonitorEnterExit
+  */
+ 
+ /*
+@@ -35,7 +35,7 @@
+  * @modules java.base/java.lang:+open jdk.management
+  * @library /test/lib
+  * @build LockingMode
+- * @run junit/othervm -XX:LockingMode=1 --enable-native-access=ALL-UNNAMED MonitorEnterExit
++ * @run junit/othervm/native -XX:LockingMode=1 --enable-native-access=ALL-UNNAMED MonitorEnterExit
+  */
+ 
+ /*
+@@ -43,7 +43,7 @@
+  * @modules java.base/java.lang:+open jdk.management
+  * @library /test/lib
+  * @build LockingMode
+- * @run junit/othervm -XX:LockingMode=2 --enable-native-access=ALL-UNNAMED MonitorEnterExit
++ * @run junit/othervm/native -XX:LockingMode=2 --enable-native-access=ALL-UNNAMED MonitorEnterExit
+  */
+ 
+ /*
+@@ -51,7 +51,7 @@
+  * @modules java.base/java.lang:+open jdk.management
+  * @library /test/lib
+  * @build LockingMode
+- * @run junit/othervm -Xint -XX:LockingMode=1 --enable-native-access=ALL-UNNAMED MonitorEnterExit
++ * @run junit/othervm/native -Xint -XX:LockingMode=1 --enable-native-access=ALL-UNNAMED MonitorEnterExit
+  */
+ 
+ /*
+@@ -59,7 +59,7 @@
+  * @modules java.base/java.lang:+open jdk.management
+  * @library /test/lib
+  * @build LockingMode
+- * @run junit/othervm -Xint -XX:LockingMode=2 --enable-native-access=ALL-UNNAMED MonitorEnterExit
++ * @run junit/othervm/native -Xint -XX:LockingMode=2 --enable-native-access=ALL-UNNAMED MonitorEnterExit
+  */
+ 
+ /*
+@@ -67,7 +67,7 @@
+  * @modules java.base/java.lang:+open jdk.management
+  * @library /test/lib
+  * @build LockingMode
+- * @run junit/othervm -Xcomp -XX:LockingMode=1 --enable-native-access=ALL-UNNAMED MonitorEnterExit
++ * @run junit/othervm/native -Xcomp -XX:LockingMode=1 --enable-native-access=ALL-UNNAMED MonitorEnterExit
+  */
+ 
+ /*
+@@ -75,7 +75,7 @@
+  * @modules java.base/java.lang:+open jdk.management
+  * @library /test/lib
+  * @build LockingMode
+- * @run junit/othervm -Xcomp -XX:LockingMode=2 --enable-native-access=ALL-UNNAMED MonitorEnterExit
++ * @run junit/othervm/native -Xcomp -XX:LockingMode=2 --enable-native-access=ALL-UNNAMED MonitorEnterExit
+  */
+ 
+ /*
+@@ -83,7 +83,7 @@
+  * @modules java.base/java.lang:+open jdk.management
+  * @library /test/lib
+  * @build LockingMode
+- * @run junit/othervm -Xcomp -XX:TieredStopAtLevel=1 -XX:LockingMode=1 --enable-native-access=ALL-UNNAMED MonitorEnterExit
++ * @run junit/othervm/native -Xcomp -XX:TieredStopAtLevel=1 -XX:LockingMode=1 --enable-native-access=ALL-UNNAMED MonitorEnterExit
+  */
+ 
+ /*
+@@ -91,7 +91,7 @@
+  * @modules java.base/java.lang:+open jdk.management
+  * @library /test/lib
+  * @build LockingMode
+- * @run junit/othervm -Xcomp -XX:TieredStopAtLevel=1 -XX:LockingMode=2 --enable-native-access=ALL-UNNAMED MonitorEnterExit
++ * @run junit/othervm/native -Xcomp -XX:TieredStopAtLevel=1 -XX:LockingMode=2 --enable-native-access=ALL-UNNAMED MonitorEnterExit
+  */
+ 
+ /*
+@@ -99,7 +99,7 @@
+  * @modules java.base/java.lang:+open jdk.management
+  * @library /test/lib
+  * @build LockingMode
+- * @run junit/othervm -Xcomp -XX:-TieredCompilation -XX:LockingMode=1 --enable-native-access=ALL-UNNAMED MonitorEnterExit
++ * @run junit/othervm/native -Xcomp -XX:-TieredCompilation -XX:LockingMode=1 --enable-native-access=ALL-UNNAMED MonitorEnterExit
+  */
+ 
+ /*
+@@ -107,7 +107,7 @@
+  * @modules java.base/java.lang:+open jdk.management
+  * @library /test/lib
+  * @build LockingMode
+- * @run junit/othervm -Xcomp -XX:-TieredCompilation -XX:LockingMode=2 --enable-native-access=ALL-UNNAMED MonitorEnterExit
++ * @run junit/othervm/native -Xcomp -XX:-TieredCompilation -XX:LockingMode=2 --enable-native-access=ALL-UNNAMED MonitorEnterExit
+  */
+ 
+ import java.time.Duration;
+diff --git a/test/jdk/java/lang/Thread/virtual/MonitorWaitNotify.java b/test/jdk/java/lang/Thread/virtual/MonitorWaitNotify.java
+index 98bdc7fdedd..0ec0adb0faf 100644
+--- a/test/jdk/java/lang/Thread/virtual/MonitorWaitNotify.java
++++ b/test/jdk/java/lang/Thread/virtual/MonitorWaitNotify.java
+@@ -1,5 +1,5 @@
+ /*
+- * Copyright (c) 2019, 2024, Oracle and/or its affiliates. All rights reserved.
++ * Copyright (c) 2019, 2025, Oracle and/or its affiliates. All rights reserved.
+  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+  *
+  * This code is free software; you can redistribute it and/or modify it
+@@ -27,7 +27,7 @@
+  * @modules java.base/java.lang:+open jdk.management
+  * @library /test/lib
+  * @build LockingMode
+- * @run junit/othervm --enable-native-access=ALL-UNNAMED MonitorWaitNotify
++ * @run junit/othervm/native --enable-native-access=ALL-UNNAMED MonitorWaitNotify
+  */
+ 
+ /*
+@@ -35,7 +35,7 @@
+  * @modules java.base/java.lang:+open jdk.management
+  * @library /test/lib
+  * @build LockingMode
+- * @run junit/othervm -XX:LockingMode=1 --enable-native-access=ALL-UNNAMED MonitorWaitNotify
++ * @run junit/othervm/native -XX:LockingMode=1 --enable-native-access=ALL-UNNAMED MonitorWaitNotify
+  */
+ 
+ /*
+@@ -43,7 +43,7 @@
+  * @modules java.base/java.lang:+open jdk.management
+  * @library /test/lib
+  * @build LockingMode
+- * @run junit/othervm -XX:LockingMode=2 --enable-native-access=ALL-UNNAMED MonitorWaitNotify
++ * @run junit/othervm/native -XX:LockingMode=2 --enable-native-access=ALL-UNNAMED MonitorWaitNotify
+  */
+ 
+ /*
+@@ -51,7 +51,7 @@
+  * @modules java.base/java.lang:+open jdk.management
+  * @library /test/lib
+  * @build LockingMode
+- * @run junit/othervm -Xint -XX:LockingMode=1 --enable-native-access=ALL-UNNAMED MonitorWaitNotify
++ * @run junit/othervm/native -Xint -XX:LockingMode=1 --enable-native-access=ALL-UNNAMED MonitorWaitNotify
+  */
+ 
+ /*
+@@ -59,7 +59,7 @@
+  * @modules java.base/java.lang:+open jdk.management
+  * @library /test/lib
+  * @build LockingMode
+- * @run junit/othervm -Xint -XX:LockingMode=2 --enable-native-access=ALL-UNNAMED MonitorWaitNotify
++ * @run junit/othervm/native -Xint -XX:LockingMode=2 --enable-native-access=ALL-UNNAMED MonitorWaitNotify
+  */
+ 
+ /*
+@@ -67,7 +67,7 @@
+  * @modules java.base/java.lang:+open jdk.management
+  * @library /test/lib
+  * @build LockingMode
+- * @run junit/othervm -Xcomp -XX:LockingMode=1 --enable-native-access=ALL-UNNAMED MonitorWaitNotify
++ * @run junit/othervm/native -Xcomp -XX:LockingMode=1 --enable-native-access=ALL-UNNAMED MonitorWaitNotify
+  */
+ 
+ /*
+@@ -75,7 +75,7 @@
+  * @modules java.base/java.lang:+open jdk.management
+  * @library /test/lib
+  * @build LockingMode
+- * @run junit/othervm -Xcomp -XX:LockingMode=2 --enable-native-access=ALL-UNNAMED MonitorWaitNotify
++ * @run junit/othervm/native -Xcomp -XX:LockingMode=2 --enable-native-access=ALL-UNNAMED MonitorWaitNotify
+  */
+ 
+ /*
+@@ -83,7 +83,7 @@
+  * @modules java.base/java.lang:+open jdk.management
+  * @library /test/lib
+  * @build LockingMode
+- * @run junit/othervm -Xcomp -XX:TieredStopAtLevel=1 -XX:LockingMode=1 --enable-native-access=ALL-UNNAMED MonitorWaitNotify
++ * @run junit/othervm/native -Xcomp -XX:TieredStopAtLevel=1 -XX:LockingMode=1 --enable-native-access=ALL-UNNAMED MonitorWaitNotify
+  */
+ 
+ /*
+@@ -91,7 +91,7 @@
+  * @modules java.base/java.lang:+open jdk.management
+  * @library /test/lib
+  * @build LockingMode
+- * @run junit/othervm -Xcomp -XX:TieredStopAtLevel=1 -XX:LockingMode=2 --enable-native-access=ALL-UNNAMED MonitorWaitNotify
++ * @run junit/othervm/native -Xcomp -XX:TieredStopAtLevel=1 -XX:LockingMode=2 --enable-native-access=ALL-UNNAMED MonitorWaitNotify
+  */
+ 
+ /*
+@@ -99,7 +99,7 @@
+  * @modules java.base/java.lang:+open jdk.management
+  * @library /test/lib
+  * @build LockingMode
+- * @run junit/othervm -Xcomp -XX:-TieredCompilation -XX:LockingMode=1 --enable-native-access=ALL-UNNAMED MonitorWaitNotify
++ * @run junit/othervm/native -Xcomp -XX:-TieredCompilation -XX:LockingMode=1 --enable-native-access=ALL-UNNAMED MonitorWaitNotify
+  */
+ 
+ /*
+@@ -107,7 +107,7 @@
+  * @modules java.base/java.lang:+open jdk.management
+  * @library /test/lib
+  * @build LockingMode
+- * @run junit/othervm -Xcomp -XX:-TieredCompilation -XX:LockingMode=2 --enable-native-access=ALL-UNNAMED MonitorWaitNotify
++ * @run junit/othervm/native -Xcomp -XX:-TieredCompilation -XX:LockingMode=2 --enable-native-access=ALL-UNNAMED MonitorWaitNotify
+  */
+ 
+ import java.util.ArrayList;
+diff --git a/test/jdk/java/lang/Thread/virtual/RetryMonitorEnterWhenPinned.java b/test/jdk/java/lang/Thread/virtual/RetryMonitorEnterWhenPinned.java
+index 1d889b72369..fa754a88b80 100644
+--- a/test/jdk/java/lang/Thread/virtual/RetryMonitorEnterWhenPinned.java
++++ b/test/jdk/java/lang/Thread/virtual/RetryMonitorEnterWhenPinned.java
+@@ -1,5 +1,5 @@
+ /*
+- * Copyright (c) 2024, Oracle and/or its affiliates. All rights reserved.
++ * Copyright (c) 2024, 2025, Oracle and/or its affiliates. All rights reserved.
+  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+  *
+  * This code is free software; you can redistribute it and/or modify it
+@@ -30,7 +30,7 @@
+  * @modules java.base/java.lang:+open
+  * @library /test/lib
+  * @requires vm.opt.LockingMode != 1
+- * @run main/othervm --enable-native-access=ALL-UNNAMED RetryMonitorEnterWhenPinned
++ * @run main/othervm/native --enable-native-access=ALL-UNNAMED RetryMonitorEnterWhenPinned
+  */
+ 
+ import java.time.Duration;
+diff --git a/test/jdk/java/lang/Thread/virtual/SynchronizedNative.java b/test/jdk/java/lang/Thread/virtual/SynchronizedNative.java
+index 578aefe6a30..c894944aa25 100644
+--- a/test/jdk/java/lang/Thread/virtual/SynchronizedNative.java
++++ b/test/jdk/java/lang/Thread/virtual/SynchronizedNative.java
+@@ -1,5 +1,5 @@
+ /*
+- * Copyright (c) 2023, 2024, Oracle and/or its affiliates. All rights reserved.
++ * Copyright (c) 2023, 2025, Oracle and/or its affiliates. All rights reserved.
+  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+  *
+  * This code is free software; you can redistribute it and/or modify it
+@@ -28,7 +28,7 @@
+  * @requires vm.continuations
+  * @modules java.base/java.lang:+open jdk.management
+  * @library /test/lib
+- * @run junit/othervm --enable-native-access=ALL-UNNAMED SynchronizedNative
++ * @run junit/othervm/native --enable-native-access=ALL-UNNAMED SynchronizedNative
+  */
+ 
+ /*
+@@ -36,7 +36,7 @@
+  * @requires vm.continuations
+  * @modules java.base/java.lang:+open jdk.management
+  * @library /test/lib
+- * @run junit/othervm -Xint --enable-native-access=ALL-UNNAMED SynchronizedNative
++ * @run junit/othervm/native -Xint --enable-native-access=ALL-UNNAMED SynchronizedNative
+  */
+ 
+ /*
+@@ -44,7 +44,7 @@
+  * @requires vm.continuations
+  * @modules java.base/java.lang:+open jdk.management
+  * @library /test/lib
+- * @run junit/othervm -Xcomp -XX:TieredStopAtLevel=1 --enable-native-access=ALL-UNNAMED SynchronizedNative
++ * @run junit/othervm/native -Xcomp -XX:TieredStopAtLevel=1 --enable-native-access=ALL-UNNAMED SynchronizedNative
+  */
+ 
+ /*
+@@ -52,7 +52,7 @@
+  * @requires vm.continuations
+  * @modules java.base/java.lang:+open jdk.management
+  * @library /test/lib
+- * @run junit/othervm -Xcomp -XX:-TieredCompilation --enable-native-access=ALL-UNNAMED SynchronizedNative
++ * @run junit/othervm/native -Xcomp -XX:-TieredCompilation --enable-native-access=ALL-UNNAMED SynchronizedNative
+  */
+ 
+ import java.util.concurrent.CountDownLatch;
+diff --git a/test/jdk/java/lang/Thread/virtual/ThreadAPI.java b/test/jdk/java/lang/Thread/virtual/ThreadAPI.java
+index d40fafc67bf..a3d85660b99 100644
+--- a/test/jdk/java/lang/Thread/virtual/ThreadAPI.java
++++ b/test/jdk/java/lang/Thread/virtual/ThreadAPI.java
+@@ -1,5 +1,5 @@
+ /*
+- * Copyright (c) 2019, 2024, Oracle and/or its affiliates. All rights reserved.
++ * Copyright (c) 2019, 2025, Oracle and/or its affiliates. All rights reserved.
+  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+  *
+  * This code is free software; you can redistribute it and/or modify it
+@@ -28,7 +28,7 @@
+  * @modules java.base/java.lang:+open jdk.management
+  * @library /test/lib
+  * @build LockingMode
+- * @run junit/othervm --enable-native-access=ALL-UNNAMED ThreadAPI
++ * @run junit/othervm/native --enable-native-access=ALL-UNNAMED ThreadAPI
+  */
+ 
+ /*
+@@ -37,7 +37,7 @@
+  * @modules java.base/java.lang:+open jdk.management
+  * @library /test/lib
+  * @build LockingMode
+- * @run junit/othervm -XX:+UnlockExperimentalVMOptions -XX:-VMContinuations
++ * @run junit/othervm/native -XX:+UnlockExperimentalVMOptions -XX:-VMContinuations
+  *     --enable-native-access=ALL-UNNAMED ThreadAPI
+  */
+ 
+diff --git a/test/jdk/java/lang/Thread/virtual/stress/GetStackTraceALotWhenPinned.java b/test/jdk/java/lang/Thread/virtual/stress/GetStackTraceALotWhenPinned.java
+index 0b5cabab7d5..f68b595eed4 100644
+--- a/test/jdk/java/lang/Thread/virtual/stress/GetStackTraceALotWhenPinned.java
++++ b/test/jdk/java/lang/Thread/virtual/stress/GetStackTraceALotWhenPinned.java
+@@ -1,5 +1,5 @@
+ /*
+- * Copyright (c) 2023, 2024, Oracle and/or its affiliates. All rights reserved.
++ * Copyright (c) 2023, 2025, Oracle and/or its affiliates. All rights reserved.
+  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+  *
+  * This code is free software; you can redistribute it and/or modify it
+@@ -28,7 +28,7 @@
+  * @requires vm.debug != true
+  * @modules jdk.management
+  * @library /test/lib
+- * @run main/othervm/timeout=300 --enable-native-access=ALL-UNNAMED GetStackTraceALotWhenPinned 100000
++ * @run main/othervm/native/timeout=300 --enable-native-access=ALL-UNNAMED GetStackTraceALotWhenPinned 100000
+  */
+ 
+ /*
+@@ -36,7 +36,7 @@
+  * @requires vm.debug == true
+  * @modules jdk.management
+  * @library /test/lib
+- * @run main/othervm/timeout=300 --enable-native-access=ALL-UNNAMED GetStackTraceALotWhenPinned 50000
++ * @run main/othervm/native/timeout=300 --enable-native-access=ALL-UNNAMED GetStackTraceALotWhenPinned 50000
+  */
+ 
+ import java.time.Instant;
+diff --git a/test/jdk/java/lang/Thread/virtual/stress/PinALot.java b/test/jdk/java/lang/Thread/virtual/stress/PinALot.java
+index 7f95847fc76..ff45ea837ae 100644
+--- a/test/jdk/java/lang/Thread/virtual/stress/PinALot.java
++++ b/test/jdk/java/lang/Thread/virtual/stress/PinALot.java
+@@ -1,5 +1,5 @@
+ /*
+- * Copyright (c) 2020, 2024, Oracle and/or its affiliates. All rights reserved.
++ * Copyright (c) 2020, 2025, Oracle and/or its affiliates. All rights reserved.
+  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+  *
+  * This code is free software; you can redistribute it and/or modify it
+@@ -26,14 +26,14 @@
+  * @summary Stress test timed park when pinned
+  * @requires vm.debug != true
+  * @library /test/lib
+- * @run main/othervm --enable-native-access=ALL-UNNAMED PinALot 500000
++ * @run main/othervm/native --enable-native-access=ALL-UNNAMED PinALot 500000
+  */
+ 
+ /*
+  * @test
+  * @requires vm.debug == true
+  * @library /test/lib
+- * @run main/othervm/timeout=300 --enable-native-access=ALL-UNNAMED PinALot 200000
++ * @run main/othervm/native/timeout=300 --enable-native-access=ALL-UNNAMED PinALot 200000
+  */
+ 
+ import java.time.Duration;
+diff --git a/test/jdk/java/lang/management/ThreadMXBean/VirtualThreads.java b/test/jdk/java/lang/management/ThreadMXBean/VirtualThreads.java
+index 7830c93ac13..28ed3fdbe54 100644
+--- a/test/jdk/java/lang/management/ThreadMXBean/VirtualThreads.java
++++ b/test/jdk/java/lang/management/ThreadMXBean/VirtualThreads.java
+@@ -27,7 +27,7 @@
+  * @summary Test java.lang.management.ThreadMXBean with virtual threads
+  * @modules java.base/java.lang:+open java.management
+  * @library /test/lib
+- * @run junit/othervm VirtualThreads
++ * @run junit/othervm/native VirtualThreads
+  */
+ 
+ /**
+diff --git a/test/jdk/java/nio/channels/vthread/SelectorOps.java b/test/jdk/java/nio/channels/vthread/SelectorOps.java
+index 1abb5c8bc5f..0c86cae6185 100644
+--- a/test/jdk/java/nio/channels/vthread/SelectorOps.java
++++ b/test/jdk/java/nio/channels/vthread/SelectorOps.java
+@@ -1,5 +1,5 @@
+ /*
+- * Copyright (c) 2023, 2024, Oracle and/or its affiliates. All rights reserved.
++ * Copyright (c) 2023, 2025, Oracle and/or its affiliates. All rights reserved.
+  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+  *
+  * This code is free software; you can redistribute it and/or modify it
+@@ -25,22 +25,22 @@
+  * @test id=default
+  * @summary Test virtual threads doing selection operations
+  * @library /test/lib
+- * @run junit/othervm --enable-native-access=ALL-UNNAMED SelectorOps
++ * @run junit/othervm/native --enable-native-access=ALL-UNNAMED SelectorOps
+  */
+ 
+ /*
+  * @test id=poller-modes
+  * @requires (os.family == "linux") | (os.family == "mac")
+  * @library /test/lib
+- * @run junit/othervm -Djdk.pollerMode=1 --enable-native-access=ALL-UNNAMED SelectorOps
+- * @run junit/othervm -Djdk.pollerMode=2 --enable-native-access=ALL-UNNAMED SelectorOps
++ * @run junit/othervm/native -Djdk.pollerMode=1 --enable-native-access=ALL-UNNAMED SelectorOps
++ * @run junit/othervm/native -Djdk.pollerMode=2 --enable-native-access=ALL-UNNAMED SelectorOps
+  */
+ 
+ /*
+  * @test id=no-vmcontinuations
+  * @requires vm.continuations
+  * @library /test/lib
+- * @run junit/othervm -XX:+UnlockExperimentalVMOptions -XX:-VMContinuations
++ * @run junit/othervm/native -XX:+UnlockExperimentalVMOptions -XX:-VMContinuations
+  *     --enable-native-access=ALL-UNNAMED SelectorOps
+  */
+ 
