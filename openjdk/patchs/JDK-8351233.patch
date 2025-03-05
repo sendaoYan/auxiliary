@@ -1,0 +1,13 @@
+diff --git a/make/autoconf/toolchain.m4 b/make/autoconf/toolchain.m4
+index 3cdd1b7698f..a52167d5ba8 100644
+--- a/make/autoconf/toolchain.m4
++++ b/make/autoconf/toolchain.m4
+@@ -856,7 +856,7 @@ AC_DEFUN_ONCE([TOOLCHAIN_SETUP_BUILD_COMPILERS],
+         UTIL_REQUIRE_PROGS(BUILD_CC, clang)
+         UTIL_REQUIRE_PROGS(BUILD_CXX, clang++)
+       else
+-        UTIL_REQUIRE_PROGS(BUILD_CC, cc gcc)
++        UTIL_REQUIRE_PROGS(BUILD_CC, gcc cc)
+         UTIL_REQUIRE_PROGS(BUILD_CXX, CC g++)
+       fi
+       UTIL_LOOKUP_PROGS(BUILD_NM, nm gcc-nm)
