@@ -1,13 +1,25 @@
-diff --git a/make/autoconf/toolchain.m4 b/make/autoconf/toolchain.m4
-index 3cdd1b7698f..a52167d5ba8 100644
---- a/make/autoconf/toolchain.m4
-+++ b/make/autoconf/toolchain.m4
-@@ -856,7 +856,7 @@ AC_DEFUN_ONCE([TOOLCHAIN_SETUP_BUILD_COMPILERS],
-         UTIL_REQUIRE_PROGS(BUILD_CC, clang)
-         UTIL_REQUIRE_PROGS(BUILD_CXX, clang++)
-       else
--        UTIL_REQUIRE_PROGS(BUILD_CC, cc gcc)
-+        UTIL_REQUIRE_PROGS(BUILD_CC, gcc cc)
-         UTIL_REQUIRE_PROGS(BUILD_CXX, CC g++)
-       fi
-       UTIL_LOOKUP_PROGS(BUILD_NM, nm gcc-nm)
+diff --git a/src/java.base/linux/native/libsimdsort/avx2-emu-funcs.hpp b/src/java.base/linux/native/libsimdsort/avx2-emu-funcs.hpp
+index 611f3f419bd54..be3475ddf3a12 100644
+--- a/src/java.base/linux/native/libsimdsort/avx2-emu-funcs.hpp
++++ b/src/java.base/linux/native/libsimdsort/avx2-emu-funcs.hpp
+@@ -127,9 +127,9 @@ void avx2_emu_mask_compressstoreu32(void *base_addr,
+     T *leftStore = (T *)base_addr;
+ 
+     int32_t shortMask = convert_avx2_mask_to_int(k);
+-    const __m256i &perm = _mm256_loadu_si256(
++    const __m256i perm = _mm256_loadu_si256(
+         (const __m256i *)avx2_compressstore_lut32_perm[shortMask].data());
+-    const __m256i &left = _mm256_loadu_si256(
++    const __m256i left = _mm256_loadu_si256(
+         (const __m256i *)avx2_compressstore_lut32_left[shortMask].data());
+ 
+     typename vtype::reg_t temp = vtype::permutevar(reg, perm);
+@@ -148,7 +148,7 @@ int avx2_double_compressstore32(void *left_addr, void *right_addr,
+     T *rightStore = (T *)right_addr;
+ 
+     int32_t shortMask = convert_avx2_mask_to_int(k);
+-    const __m256i &perm = _mm256_loadu_si256(
++    const __m256i perm = _mm256_loadu_si256(
+         (const __m256i *)avx2_compressstore_lut32_perm[shortMask].data());
+ 
+     typename vtype::reg_t temp = vtype::permutevar(reg, perm);
