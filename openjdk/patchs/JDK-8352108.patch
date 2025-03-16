@@ -1,0 +1,13 @@
+diff --git a/src/hotspot/share/compiler/compileBroker.cpp b/src/hotspot/share/compiler/compileBroker.cpp
+index 1bb184ef77a..9e15e50da38 100644
+--- a/src/hotspot/share/compiler/compileBroker.cpp
++++ b/src/hotspot/share/compiler/compileBroker.cpp
+@@ -2374,7 +2374,7 @@ void CompileBroker::invoke_compiler_on_method(CompileTask* task) {
+     if (CompilationLog::log() != nullptr) {
+       CompilationLog::log()->log_failure(thread, task, failure_reason, retry_message);
+     }
+-    if (PrintCompilation || task->directive()->PrintCompilationOption) {
++    if (PrintCompilation || (task->directive()->PrintCompilationOption && strcmp(failure_reason, "concurrent class loading") != 0)) {
+       FormatBufferResource msg = retry_message != nullptr ?
+         FormatBufferResource("COMPILE SKIPPED: %s (%s)", failure_reason, retry_message) :
+         FormatBufferResource("COMPILE SKIPPED: %s",      failure_reason);
